@@ -1,0 +1,13 @@
+{
+  "name": "hivehub",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "packages/*"
+  ],
+  "scripts": {
+    "start:frontend": "pnpm --filter frontend start",
+    "start:backend": "pnpm --filter backend start:dev"
+  }
+}
