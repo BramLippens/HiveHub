@@ -1,8 +1,10 @@
 import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import MovieList from "./MovieList";
 import AddMovie from "./AddMovie";
 import MovieDetails from "./MovieDetails";
+import BarcodeScanner from './BarcodeScanner';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -12,17 +14,22 @@ export default function MoviesModule() {
             <Stack.Screen
                 name="MovieList"
                 component={MovieList}
-                options={{ title: "Movies" }}
+                options={{title: "Movies"}}
             />
             <Stack.Screen
                 name="MovieDetails"
                 component={MovieDetails}
-                options={{ title: "Movie Details" }}
+                options={{title: "Movie Details"}}
             />
             <Stack.Screen
                 name="AddMovie"
                 component={AddMovie}
-                options={{ title: "Add Movie" }}
+                options={{title: "Add Movie"}}
+            />
+            <Stack.Screen
+                name="BarcodeScanner"
+                component={BarcodeScanner}
+                options={{title: "Scan Barcode"}}
             />
         </Stack.Navigator>
     );
