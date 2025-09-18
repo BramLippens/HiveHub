@@ -34,3 +34,9 @@ export async function addMovie(title: string, year: string): Promise<void> {
 export async function clearMovies() {
   await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify([]));
 }
+
+export async function getMovieById(id: string): Promise<Movie | null> {
+    const movies = await getMovies();
+    const movie = movies.find(movie => movie.id === id);
+    return movie || null;
+}

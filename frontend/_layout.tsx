@@ -1,20 +1,20 @@
-import { Tabs } from "expo-router";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import MoviesModule from './src/modules/movies';
 
-const modules = [
-  { name: "movies", title: "Movies" },
-  { name: "books", title: "Books" },
-];
+const Stack = createStackNavigator();
 
-export default function AppLayout() {
-  return (
-    <Tabs>
-      {modules.map((mod) => (
-        <Tabs.Screen
-          key={mod.name}
-          name={`modules/${mod.name}`}
-          options={{ title: mod.title }}
-        />
-      ))}
-    </Tabs>
-  );
+export default function RootLayout() {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="Movies"
+                    component={MoviesModule}
+                    options={{ headerShown: false }}
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }
