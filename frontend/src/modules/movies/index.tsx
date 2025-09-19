@@ -4,6 +4,7 @@ import MovieList from "./MovieList";
 import AddMovie from "./AddMovie";
 import MovieDetails from "./MovieDetails";
 import BarcodeScanner from './BarcodeScanner';
+import ProfileScreenWrapper from './ProfileScreenWrapper';
 
 
 const Stack = createNativeStackNavigator();
@@ -30,6 +31,11 @@ export default function MoviesModule() {
                 name="BarcodeScanner"
                 component={BarcodeScanner}
                 options={{title: "Scan Barcode"}}
+            />
+            <Stack.Screen
+                name="Profile"
+                component={ProfileScreenWrapper}
+                options={{title: "Profile"}}
             />
         </Stack.Navigator>
     );
