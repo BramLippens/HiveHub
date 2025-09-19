@@ -9,6 +9,17 @@ export interface Movie {
     barcode?: string;
     userId: string; // Associate movie with user
     createdAt: string;
+
+    // Metadata fields
+    tmdbId?: number;
+    overview?: string;
+    poster?: string;
+    runtime?: number;
+    genres?: string[];
+    director?: string;
+    cast?: string[];
+    rating?: number;
+    type?: 'movie' | 'tv';
 }
 
 const STORAGE_KEY = 'movies_collection';
@@ -65,6 +76,34 @@ export async function addMovie(title: string, year: string, barcode?: string): P
     await saveAllMoviesToStorage(allMovies);
 }
 
+// Add movie with metadata
+export async function addMovieWithMetadata(
+    title: string,
+    year: string,
+    metadata?: Partial<Movie>,
+    barcode?: string
+): Promise<void> {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) {
+        throw new Error('User not authenticated');
+    }
+
+    const allMovies = await getAllMoviesFromStorage();
+    const newMovie: Movie = {
+        id: uuidv4(),
+        title,
+        year,
+        barcode,
+        userId: currentUser.id,
+        createdAt: new Date().toISOString(),
+        ...metadata // Spread metadata fields
+    };
+
+    console.log("Adding movie with metadata:", newMovie);
+    allMovies.push(newMovie);
+    await saveAllMoviesToStorage(allMovies);
+}
+
 // clear movies for current user only
 export async function clearMovies() {
     const currentUser = await getCurrentUser();
@@ -114,6 +153,30 @@ export async function assignBarcodeToMovie(movieId: string, barcode: string): Pr
 
     if (movieIndex !== -1) {
         allMovies[movieIndex].barcode = barcode;
+        await saveAllMoviesToStorage(allMovies);
+        return true;
+    }
+
+    return false;
+}
+
+// Update movie metadata
+export async function updateMovieMetadata(movieId: string, metadata: Partial<Movie>): Promise<boolean> {
+    const currentUser = await getCurrentUser();
+    if (!currentUser) {
+        throw new Error('User not authenticated');
+    }
+
+    const allMovies = await getAllMoviesFromStorage();
+    const movieIndex = allMovies.findIndex(movie =>
+        movie.id === movieId && movie.userId === currentUser.id
+    );
+
+    if (movieIndex !== -1) {
+        allMovies[movieIndex] = {
+            ...allMovies[movieIndex],
+            ...metadata
+        };
         await saveAllMoviesToStorage(allMovies);
         return true;
     }

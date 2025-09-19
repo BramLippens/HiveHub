@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, Text, Button, FlatList, TextInput, TouchableOpacity, StyleSheet} from "react-native";
+import {View, Text, Button, FlatList, TextInput, TouchableOpacity, StyleSheet, Image} from "react-native";
 import {getMovies, initDB, Movie} from "./db";
 import {useFocusEffect} from "@react-navigation/native";
 
@@ -31,7 +31,57 @@ export default function MovieList({navigation}: any) {
     );
 
     const filtered = movies.filter((m) =>
-        m.title.toLowerCase().includes(search.toLowerCase())
+        m.title.toLowerCase().includes(search.toLowerCase()) ||
+        m.genres?.some(genre => genre.toLowerCase().includes(search.toLowerCase())) ||
+        m.director?.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const renderMovieItem = ({ item }: { item: Movie }) => (
+        <TouchableOpacity
+            onPress={() => navigation.navigate("MovieDetails", {movieId: item.id})}
+            style={styles.movieItem}
+        >
+            <View style={styles.movieContent}>
+                {item.poster ? (
+                    <Image source={{ uri: item.poster }} style={styles.poster} />
+                ) : (
+                    <View style={styles.placeholderPoster}>
+                        <Text style={styles.placeholderText}>No Image</Text>
+                    </View>
+                )}
+
+                <View style={styles.movieInfo}>
+                    <Text style={styles.movieTitle}>{item.title}</Text>
+                    <Text style={styles.movieYear}>
+                        {item.type === 'tv' ? 'TV Series' : 'Movie'} • {item.year}
+                    </Text>
+
+                    {item.rating && (
+                        <Text style={styles.rating}>⭐ {item.rating.toFixed(1)}/10</Text>
+                    )}
+
+                    {item.genres && item.genres.length > 0 && (
+                        <Text style={styles.genres}>
+                            {item.genres.slice(0, 2).join(', ')}
+                        </Text>
+                    )}
+
+                    {item.director && (
+                        <Text style={styles.director}>
+                            {item.type === 'tv' ? 'Creator' : 'Director'}: {item.director}
+                        </Text>
+                    )}
+
+                    {item.barcode && (
+                        <Text style={styles.barcode}>📱 {item.barcode}</Text>
+                    )}
+
+                    {!item.poster && !item.overview && (
+                        <Text style={styles.noMetadata}>Tap to add metadata</Text>
+                    )}
+                </View>
+            </View>
+        </TouchableOpacity>
     );
 
     return (
@@ -49,16 +99,10 @@ export default function MovieList({navigation}: any) {
 
             {/* Search bar */}
             <TextInput
-                placeholder="Search movies..."
+                placeholder="Search by title, genre, or director..."
                 value={search}
                 onChangeText={setSearch}
-                style={{
-                    borderWidth: 1,
-                    borderColor: "#ccc",
-                    padding: 8,
-                    marginBottom: 12,
-                    borderRadius: 6,
-                }}
+                style={styles.searchInput}
             />
 
             <View style={styles.buttonRow}>
@@ -70,29 +114,14 @@ export default function MovieList({navigation}: any) {
             <FlatList
                 data={filtered}
                 keyExtractor={(item) => item.id}
-                renderItem={({item}) => (
-                    <TouchableOpacity
-                        onPress={() =>
-                            navigation.navigate("MovieDetails", {movieId: item.id})
-                        }
-                        style={styles.movieItem}
-                    >
-                        <Text style={styles.movieTitle}>
-                            {item.title} ({item.year})
-                        </Text>
-                        {item.barcode && (
-                            <Text style={styles.movieBarcode}>
-                                Barcode: {item.barcode}
-                            </Text>
-                        )}
-                    </TouchableOpacity>
-                )}
+                renderItem={renderMovieItem}
                 ListEmptyComponent={
                     <View style={styles.emptyContainer}>
                         <Text style={styles.emptyText}>No movies found</Text>
                         <Text style={styles.emptySubtext}>Add your first movie or scan a barcode to get started</Text>
                     </View>
                 }
+                showsVerticalScrollIndicator={false}
             />
         </View>
     );
@@ -120,6 +149,15 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: '600',
     },
+    searchInput: {
+        borderWidth: 1,
+        borderColor: "#ddd",
+        padding: 12,
+        marginBottom: 15,
+        borderRadius: 8,
+        backgroundColor: 'white',
+        fontSize: 16,
+    },
     buttonRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -128,27 +166,78 @@ const styles = StyleSheet.create({
     },
     movieItem: {
         backgroundColor: 'white',
-        padding: 15,
-        marginVertical: 4,
-        borderRadius: 8,
+        marginVertical: 6,
+        borderRadius: 12,
         shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
-        shadowRadius: 2,
-        elevation: 2,
+        shadowRadius: 4,
+        elevation: 3,
+        overflow: 'hidden',
+    },
+    movieContent: {
+        flexDirection: 'row',
+        padding: 15,
+    },
+    poster: {
+        width: 60,
+        height: 90,
+        borderRadius: 8,
+        marginRight: 15,
+    },
+    placeholderPoster: {
+        width: 60,
+        height: 90,
+        borderRadius: 8,
+        marginRight: 15,
+        backgroundColor: '#e0e0e0',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    placeholderText: {
+        color: '#999',
+        fontSize: 10,
+        textAlign: 'center',
+    },
+    movieInfo: {
+        flex: 1,
+        justifyContent: 'center',
     },
     movieTitle: {
-        fontSize: 16,
-        fontWeight: '600',
+        fontSize: 18,
+        fontWeight: 'bold',
         color: '#333',
+        marginBottom: 4,
     },
-    movieBarcode: {
+    movieYear: {
+        fontSize: 14,
+        color: '#007AFF',
+        marginBottom: 4,
+    },
+    rating: {
+        fontSize: 14,
+        color: '#FF9500',
+        marginBottom: 4,
+    },
+    genres: {
         fontSize: 12,
         color: '#666',
-        marginTop: 5,
+        marginBottom: 4,
+    },
+    director: {
+        fontSize: 12,
+        color: '#666',
+        marginBottom: 4,
+    },
+    barcode: {
+        fontSize: 12,
+        color: '#999',
+        marginBottom: 4,
+    },
+    noMetadata: {
+        fontSize: 12,
+        color: '#007AFF',
+        fontStyle: 'italic',
     },
     emptyContainer: {
         alignItems: 'center',
