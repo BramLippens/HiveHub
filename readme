@@ -1,10 +1,10 @@
-# Project X — Movie Collection Management API
+# HiveHub — Movie Collection Management API
 
 A modular NestJS API for managing personal movie collections with clean architecture and built-in extensibility.
 
 ## 🎯 Overview
 
-Project X demonstrates a production-ready, modular architecture inspired by Odoo's design patterns. Built with TypeScript and NestJS, it provides a scalable foundation for managing personal collections.
+HiveHub demonstrates a production-ready, modular architecture inspired by Odoo's design patterns. Built with TypeScript and NestJS, it provides a scalable foundation for managing personal collections.
 
 **Key Highlights:**
 - Clean, modular architecture separating business logic from application layers
@@ -22,7 +22,7 @@ Project X demonstrates a production-ready, modular architecture inspired by Odoo
 ## 📁 Project Structure
 
 ```
-project_x/
+hivehub/
 ├── apps/
 │   └── api/
 │       ├── src/
@@ -51,7 +51,7 @@ project_x/
 1. **Clone the repository:**
    ```bash
    git clone <repo-url>
-   cd project_x
+   cd hivehub
    ```
 
 2. **Install dependencies:**
