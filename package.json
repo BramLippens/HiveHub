@@ -1,0 +1,23 @@
+{
+  "name": "project_x",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev:api": "ts-node --project apps/api/tsconfig.json -r tsconfig-paths/register apps/api/src/main.ts",
+    "build:api": "tsc -p apps/api && tsc-alias -p apps/api"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.8",
+    "@nestjs/core": "^11.1.8",
+    "@nestjs/platform-express": "^11.1.8",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsc-alias": "^1.8.8",
+    "typescript": "^5.9.3"
+  }
+}
