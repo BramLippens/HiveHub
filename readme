@@ -1,0 +1,135 @@
+# Project X — Movie Collection Management API
+
+A modular NestJS API for managing personal movie collections with clean architecture and built-in extensibility.
+
+## 🎯 Overview
+
+Project X demonstrates a production-ready, modular architecture inspired by Odoo's design patterns. Built with TypeScript and NestJS, it provides a scalable foundation for managing personal collections.
+
+**Key Highlights:**
+- Clean, modular architecture separating business logic from application layers
+- Designed for extensibility (future support for books, games, music)
+- TypeScript path aliases for maintainable imports
+- API versioning (`/api/v1`) following production best practices
+
+## ✨ Features (Week 1)
+
+- ✅ RESTful `/api/v1/movies` endpoint with sample data
+- ✅ Modular structure with isolated Movies module
+- ✅ Global API prefix (`/api/v1`) for consistent versioning
+- ✅ TypeScript monorepo setup with path aliases (`@modules/*`)
+
+## 📁 Project Structure
+
+```
+project_x/
+├── apps/
+│   └── api/
+│       ├── src/
+│       │   ├── main.ts          # Application entry point
+│       │   └── app.module.ts    # Root module
+│       └── tsconfig.json
+├── modules/
+│   └── movies/
+│       └── api/
+│           ├── movies.controller.ts
+│           └── movies.module.ts
+├── tsconfig.base.json           # Base TypeScript config
+├── package.json
+└── .gitignore
+```
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** >= 20
+- **pnpm** (recommended) or npm/yarn
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repo-url>
+   cd project_x
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   pnpm install
+   ```
+
+### Development
+
+**Run the development server:**
+```bash
+pnpm ts-node --project apps/api/tsconfig.json -r tsconfig-paths/register apps/api/src/main.ts
+```
+
+**API will be available at:**
+- Base URL: `http://localhost:3000/api/v1`
+- Movies endpoint: `http://localhost:3000/api/v1/movies`
+
+### Production Build
+
+**Compile and run:**
+```bash
+# Build TypeScript
+pnpm tsc -p apps/api
+pnpm tsc-alias -p apps/api
+
+# Start production server
+node dist/apps/api/src/main.js
+```
+
+## 📡 API Reference
+
+### Get Movies
+
+```http
+GET /api/v1/movies
+```
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "title": "The Matrix",
+    "year": 1999
+  },
+  {
+    "id": 2,
+    "title": "Inception",
+    "year": 2010
+  }
+]
+```
+
+## 🗺️ Roadmap
+
+**Upcoming Features:**
+- [ ] Prisma ORM integration for database persistence
+- [ ] User authentication and authorization module
+- [ ] Dynamic module loading for multiple collection types
+- [ ] Swagger/OpenAPI documentation
+- [ ] `/api/v2` endpoints for future API evolution
+
+## 🏗️ Architecture Notes
+
+- **Domain-First Design:** All modules reside in `modules/` for clear separation of concerns
+- **API Versioning:** Global prefix `/api/v1` ensures backward compatibility
+- **Path Aliases:** TypeScript aliases (`@modules/*`) eliminate relative import complexity
+- **Scalability:** Modular structure supports horizontal growth (new collection types, features)
+
+## 📄 License
+
+MIT © [Your Name]
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+---
+
+**Built with:** NestJS • TypeScript • pnpm
