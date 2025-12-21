@@ -3,7 +3,10 @@
     "allow": [
       "Bash(dir:*)",
       "Bash(if not exist \".idea\\runConfigurations\" mkdir .idearunConfigurations)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git remote add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
