@@ -23,6 +23,9 @@ build/
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# Claude Code
+.claude/
+
 # Misc
 .DS_Store
 *.swp
