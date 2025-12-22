@@ -1,0 +1,7 @@
+# PNPM Workspace Configuration
+# This defines the monorepo structure for the collection project
+
+packages:
+  - 'api'
+  - 'web'
+  - 'shared'
