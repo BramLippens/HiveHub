@@ -1,5 +1,55 @@
 ### Get Hello World
-GET http://localhost:3000
+GET http://localhost:3000/api
 Accept: application/json
+
+###
+
+### Movies API Endpoints
+
+### Get all movies
+GET http://localhost:3000/api/movies
+Accept: application/json
+
+###
+
+### Get movie by ID
+GET http://localhost:3000/api/movies/1
+Accept: application/json
+
+###
+
+### Search movie by barcode
+GET http://localhost:3000/api/movies?barcode=883929305773
+Accept: application/json
+
+###
+
+### Create a new movie
+POST http://localhost:3000/api/movies
+Content-Type: application/json
+
+{
+  "title": "The Matrix",
+  "director": "The Wachowskis",
+  "releaseYear": 1999,
+  "barcode": "085391163121",
+  "genre": "Sci-Fi",
+  "rating": 8.7
+}
+
+###
+
+### Update a movie
+PUT http://localhost:3000/api/movies/1
+Content-Type: application/json
+
+{
+  "rating": 9.5
+}
+
+###
+
+### Delete a movie
+DELETE http://localhost:3000/api/movies/6
 
 ###
