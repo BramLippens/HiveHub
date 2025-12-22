@@ -25,6 +25,7 @@ build/
 
 # Claude Code
 .claude/
+CLAUDE.MD
 
 # Misc
 .DS_Store
