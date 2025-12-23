@@ -5,6 +5,7 @@
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { Navigation } from './components/Navigation';
 import { MoviesListPage } from './pages/MoviesListPage';
 import { MovieDetailPage } from './pages/MovieDetailPage';
@@ -13,21 +14,23 @@ import { EditMoviePage } from './pages/EditMoviePage';
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="app">
-        <Navigation />
-        <main className="app-main">
-          <Routes>
-            <Route path="/" element={<Navigate to="/movies" replace />} />
-            <Route path="/movies" element={<MoviesListPage />} />
-            <Route path="/movies/new" element={<AddMoviePage />} />
-            <Route path="/movies/:id" element={<MovieDetailPage />} />
-            <Route path="/movies/:id/edit" element={<EditMoviePage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </main>
-      </div>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <div className="app">
+          <Navigation />
+          <main className="app-main">
+            <Routes>
+              <Route path="/" element={<Navigate to="/movies" replace />} />
+              <Route path="/movies" element={<MoviesListPage />} />
+              <Route path="/movies/new" element={<AddMoviePage />} />
+              <Route path="/movies/:id" element={<MovieDetailPage />} />
+              <Route path="/movies/:id/edit" element={<EditMoviePage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </main>
+        </div>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

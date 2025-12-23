@@ -1,10 +1,22 @@
+/* CSS Variables for Theming */
+:root {
+  --bg-gradient-1: #0f0c29;
+  --bg-gradient-2: #302b63;
+  --bg-gradient-3: #24243e;
+  --primary-gradient-1: #667eea;
+  --primary-gradient-2: #764ba2;
+  --accent-color: #667eea;
+  --error-color: #dc3545;
+}
+
 /* App Container */
 .app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 50%, var(--bg-gradient-3) 100%);
   width: 100%;
+  transition: background 0.5s ease;
 }
 
 .app-main {
@@ -39,11 +51,12 @@
 .nav-logo {
   font-size: 1.5rem;
   font-weight: bold;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary-gradient-1) 0%, var(--primary-gradient-2) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-decoration: none;
+  transition: opacity 0.3s ease;
 }
 
 .nav-logo:hover {
@@ -67,18 +80,19 @@
 }
 
 .nav-links a:hover {
-  background-color: rgba(99, 102, 241, 0.2);
+  background-color: rgba(var(--accent-color-rgb, 102, 126, 234), 0.2);
   color: #fff;
 }
 
 .nav-button-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  background: linear-gradient(135deg, var(--primary-gradient-1) 0%, var(--primary-gradient-2) 100%) !important;
   color: #fff !important;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 2px 8px rgba(var(--accent-color-rgb, 102, 126, 234), 0.4);
+  transition: all 0.3s ease;
 }
 
 .nav-button-primary:hover {
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.6) !important;
+  box-shadow: 0 4px 12px rgba(var(--accent-color-rgb, 102, 126, 234), 0.6) !important;
   transform: translateY(-1px);
 }
 
@@ -133,7 +147,7 @@
   width: 48px;
   height: 48px;
   border: 4px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #667eea;
+  border-top-color: var(--accent-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
@@ -147,8 +161,8 @@
 
 /* Error Message */
 .error-message {
-  background: rgba(220, 53, 69, 0.1);
-  border: 1px solid rgba(220, 53, 69, 0.3);
+  background: rgba(var(--error-color-rgb, 220, 53, 69), 0.1);
+  border: 1px solid rgba(var(--error-color-rgb, 220, 53, 69), 0.3);
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
@@ -168,7 +182,7 @@
 .retry-button {
   margin-top: 1rem;
   padding: 0.5rem 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary-gradient-1) 0%, var(--primary-gradient-2) 100%);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -177,7 +191,7 @@
 }
 
 .retry-button:hover {
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 12px rgba(var(--accent-color-rgb, 102, 126, 234), 0.4);
   transform: translateY(-1px);
 }
 
@@ -212,9 +226,9 @@
 
 .search-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--accent-color);
   background-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 0 0 3px rgba(var(--accent-color-rgb, 102, 126, 234), 0.2);
 }
 
 .search-button,
@@ -228,13 +242,13 @@
 }
 
 .search-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary-gradient-1) 0%, var(--primary-gradient-2) 100%);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 2px 8px rgba(var(--accent-color-rgb, 102, 126, 234), 0.3);
 }
 
 .search-button:hover {
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 4px 12px rgba(var(--accent-color-rgb, 102, 126, 234), 0.5);
   transform: translateY(-1px);
 }
 
@@ -307,8 +321,8 @@
 
 .movie-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
-  border-color: rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 24px rgba(var(--accent-color-rgb, 102, 126, 234), 0.3);
+  border-color: rgba(var(--accent-color-rgb, 102, 126, 234), 0.4);
   background: rgba(255, 255, 255, 0.08);
 }
 
@@ -326,7 +340,7 @@
 }
 
 .movie-card-header h3 a {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary-gradient-1) 0%, var(--primary-gradient-2) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -339,13 +353,14 @@
 }
 
 .movie-year {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  background: linear-gradient(135deg, rgba(var(--accent-color-rgb, 102, 126, 234), 0.2) 0%, rgba(var(--accent-color-rgb, 102, 126, 234), 0.2) 100%);
+  border: 1px solid rgba(var(--accent-color-rgb, 102, 126, 234), 0.3);
   padding: 0.25rem 0.75rem;
   border-radius: 12px;
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.9);
   white-space: nowrap;
+  transition: all 0.3s ease;
 }
 
 .movie-card-body p {
@@ -375,13 +390,13 @@
 }
 
 .card-link {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary-gradient-1) 0%, var(--primary-gradient-2) 100%);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 2px 8px rgba(var(--accent-color-rgb, 102, 126, 234), 0.3);
 }
 
 .card-link:hover {
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 4px 12px rgba(var(--accent-color-rgb, 102, 126, 234), 0.5);
   transform: translateY(-1px);
 }
 
@@ -472,24 +487,24 @@
 }
 
 .edit-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary-gradient-1) 0%, var(--primary-gradient-2) 100%);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 2px 8px rgba(var(--accent-color-rgb, 102, 126, 234), 0.3);
 }
 
 .edit-button:hover {
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 4px 12px rgba(var(--accent-color-rgb, 102, 126, 234), 0.5);
   transform: translateY(-1px);
 }
 
 .delete-button {
-  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  background: linear-gradient(135deg, var(--error-color) 0%, #c82333 100%);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+  box-shadow: 0 2px 8px rgba(var(--error-color-rgb, 220, 53, 69), 0.3);
 }
 
 .delete-button:hover {
-  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.5);
+  box-shadow: 0 4px 12px rgba(var(--error-color-rgb, 220, 53, 69), 0.5);
   transform: translateY(-1px);
 }
 
@@ -563,17 +578,17 @@
 
 .confirm-delete-button {
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  background: linear-gradient(135deg, var(--error-color) 0%, #c82333 100%);
   color: #fff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+  box-shadow: 0 2px 8px rgba(var(--error-color-rgb, 220, 53, 69), 0.3);
 }
 
 .confirm-delete-button:hover {
-  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.5);
+  box-shadow: 0 4px 12px rgba(var(--error-color-rgb, 220, 53, 69), 0.5);
   transform: translateY(-1px);
 }
 
@@ -629,9 +644,9 @@
 
 .form-group input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--accent-color);
   background-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 0 0 3px rgba(var(--accent-color-rgb, 102, 126, 234), 0.2);
 }
 
 .form-group input:disabled {
@@ -640,8 +655,8 @@
 }
 
 .form-group input[aria-invalid="true"] {
-  border-color: #dc3545;
-  background-color: rgba(220, 53, 69, 0.05);
+  border-color: var(--error-color);
+  background-color: rgba(var(--error-color-rgb, 220, 53, 69), 0.05);
 }
 
 .error-text {
@@ -659,7 +674,7 @@
 
 .submit-button {
   padding: 0.75rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary-gradient-1) 0%, var(--primary-gradient-2) 100%);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -667,11 +682,11 @@
   font-size: 1rem;
   font-weight: 500;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 2px 8px rgba(var(--accent-color-rgb, 102, 126, 234), 0.3);
 }
 
 .submit-button:hover {
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 4px 12px rgba(var(--accent-color-rgb, 102, 126, 234), 0.5);
   transform: translateY(-1px);
 }
 
