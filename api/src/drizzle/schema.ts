@@ -4,6 +4,7 @@ import {
   varchar,
   float,
   uniqueIndex,
+  timestamp,
 } from 'drizzle-orm/mysql-core';
 
 export const movies = mysqlTable(
@@ -18,4 +19,19 @@ export const movies = mysqlTable(
     rating: float('rating'),
   },
   (table) => [uniqueIndex('idx_barcode_unique').on(table.barcode)],
+);
+
+export const users = mysqlTable(
+  'users',
+  {
+    id: int('id', { unsigned: true }).primaryKey().autoincrement(),
+    email: varchar('email', { length: 255 }).notNull(),
+    username: varchar('username', { length: 100 }).notNull(),
+    passwordHash: varchar('password_hash', { length: 255 }).notNull(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex('idx_email_unique').on(table.email),
+    uniqueIndex('idx_username_unique').on(table.username),
+  ],
 );

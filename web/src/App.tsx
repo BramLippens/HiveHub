@@ -6,31 +6,77 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Navigation } from './components/Navigation';
+import { ProtectedRoute } from './components/ProtectedRoute';
 import { MoviesListPage } from './pages/MoviesListPage';
 import { MovieDetailPage } from './pages/MovieDetailPage';
 import { AddMoviePage } from './pages/AddMoviePage';
 import { EditMoviePage } from './pages/EditMoviePage';
+import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
+
+function RootRedirect() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return null;
+  }
+
+  return <Navigate to={user ? '/movies' : '/login'} replace />;
+}
 
 function App() {
   return (
-    <ThemeProvider>
-      <BrowserRouter>
-        <div className="app">
-          <Navigation />
-          <main className="app-main">
-            <Routes>
-              <Route path="/" element={<Navigate to="/movies" replace />} />
-              <Route path="/movies" element={<MoviesListPage />} />
-              <Route path="/movies/new" element={<AddMoviePage />} />
-              <Route path="/movies/:id" element={<MovieDetailPage />} />
-              <Route path="/movies/:id/edit" element={<EditMoviePage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </main>
-        </div>
-      </BrowserRouter>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider>
+        <BrowserRouter>
+          <div className="app">
+            <Navigation />
+            <main className="app-main">
+              <Routes>
+                <Route path="/" element={<RootRedirect />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route
+                  path="/movies"
+                  element={
+                    <ProtectedRoute>
+                      <MoviesListPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/movies/new"
+                  element={
+                    <ProtectedRoute>
+                      <AddMoviePage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/movies/:id"
+                  element={
+                    <ProtectedRoute>
+                      <MovieDetailPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/movies/:id/edit"
+                  element={
+                    <ProtectedRoute>
+                      <EditMoviePage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </main>
+          </div>
+        </BrowserRouter>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

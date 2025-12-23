@@ -9,6 +9,7 @@ import {
   Query,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import {
@@ -17,8 +18,10 @@ import {
   MovieResponseDto,
   MovieListResponseDto,
 } from './movies.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('movies')
+@UseGuards(JwtAuthGuard)
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 

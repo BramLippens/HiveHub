@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HealthController } from './health/health.controller';
 import { MoviesModule } from './movies/movies.module';
+import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -14,6 +15,7 @@ import configuration from './config/configuration';
       envFilePath: '.env',
     }),
     MoviesModule,
+    AuthModule,
   ],
   controllers: [AppController, HealthController],
   providers: [AppService],

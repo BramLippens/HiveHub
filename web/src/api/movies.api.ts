@@ -3,7 +3,7 @@
  * API integration layer for movie CRUD operations
  */
 
-import { buildApiUrl } from './config';
+import { buildApiUrl, buildAuthHeaders } from './config';
 import type {
   Movie,
   MovieListResponse,
@@ -20,7 +20,9 @@ export async function getMovies(barcode?: string): Promise<MovieListResponse> {
       ? buildApiUrl(`movies?barcode=${encodeURIComponent(barcode)}`)
       : buildApiUrl('movies');
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: buildAuthHeaders(),
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -39,7 +41,9 @@ export async function getMovies(barcode?: string): Promise<MovieListResponse> {
  */
 export async function getMovieById(id: number): Promise<Movie> {
   try {
-    const response = await fetch(buildApiUrl(`movies/${id}`));
+    const response = await fetch(buildApiUrl(`movies/${id}`), {
+      headers: buildAuthHeaders(),
+    });
 
     if (!response.ok) {
       if (response.status === 404) {
@@ -65,9 +69,7 @@ export async function createMovie(
   try {
     const response = await fetch(buildApiUrl('movies'), {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: buildAuthHeaders(),
       body: JSON.stringify(movieData),
     });
 
@@ -93,9 +95,7 @@ export async function updateMovie(
   try {
     const response = await fetch(buildApiUrl(`movies/${id}`), {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: buildAuthHeaders(),
       body: JSON.stringify(movieData),
     });
 
@@ -121,6 +121,7 @@ export async function deleteMovie(id: number): Promise<void> {
   try {
     const response = await fetch(buildApiUrl(`movies/${id}`), {
       method: 'DELETE',
+      headers: buildAuthHeaders(),
     });
 
     if (!response.ok) {
